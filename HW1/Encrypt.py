@@ -3,21 +3,19 @@ import math
 
 cipher = sys.argv[1]
 key = sys.argv[2]
-plain = sys.argv[3]
+plaintext = sys.argv[3]
 
 ans = ''
 block = []
 
-# casear cipher
+# caesar cipher
 if cipher == 'caesar':
-	for i in plain:
+	for i in plaintext:
 		ans += chr((ord(i) - ord('a') + int(key)) % 26 + 65)
 	print (ans)
 
 # playfair cipher
 elif cipher == 'playfair':
-
-	# initialize key pad
 	tmp = key
 	tmp.replace('J','I')
 	key = ''
@@ -29,12 +27,11 @@ elif cipher == 'playfair':
 		if (key.find(chr(i)) == -1) & (i != 74):
 			key += chr(i)
 
-	# do encryption
-	plain.replace('j','i')
-	plain = plain.upper()
-	for i in range (0, len(plain), 2):
-		p1 = key.find(plain[i])
-		p2 = key.find(plain[i + 1])
+	plaintext.replace('j','i')
+	plaintext = plaintext.upper()
+	for i in range (0, len(plaintext), 2):
+		p1 = key.find(plaintext[i])
+		p2 = key.find(plaintext[i + 1])
 		if int(p1/5) == int(p2/5):
 			if (p1 % 5 + 1) == 5:
 				ans += key[p1 - 4]
@@ -66,7 +63,7 @@ elif cipher == 'playfair':
 # vernam cipher
 elif cipher == 'vernam':
 	n = 0
-	for i in plain:
+	for i in plaintext:
 		ans += chr(((ord(i) - ord('a')) ^ (ord(key[n]) - ord('A'))) + 65)
 		n += 1
 	print (ans)
@@ -77,8 +74,8 @@ elif cipher == 'row':
 		block.append([])
 
 	for n in range (len(key)):
-		for i in range (math.ceil(len(plain)/len(key))):
-			block[int(key[n]) - 1].append(plain[n + len(key) * i])
+		for i in range (math.ceil(len(plaintext)/len(key))):
+			block[int(key[n]) - 1].append(plaintext[n + len(key) * i])
 
 	for i in range (len(block)):
 		for n in block[i]:
@@ -93,7 +90,7 @@ elif cipher == 'rail_fence':
 
 	n = 0
 	flag = True
-	for i in plain:
+	for i in plaintext:
 		block[n].append(i)
 		if flag == True:
 			if n != fence:
