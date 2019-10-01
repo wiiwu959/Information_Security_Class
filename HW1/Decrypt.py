@@ -62,14 +62,28 @@ elif cipher == 'playfair':
 # vernam cipher
 elif cipher == 'vernam':
 	n = 0
+	k = 0
 	for i in ciphertext:
-		ans += chr(((ord(i) - ord('A')) ^ (ord(key[n]) - ord('A'))) + 97)
-		n += 1
+		if n < len(key):
+			p = ord(i) - ord(key[n])
+			if p < 0:
+				p += 123
+			else:
+				p += 97
+			n += 1
+		else:
+			p = ord(i) - ord(ans[k]) + 32
+			if p < 0:
+				p += 123
+			else:
+				p += 97
+			k += 1
+		ans += chr(p)
 	print (ans)
 
 # row cipher
 elif cipher == 'row':
-	ciphertext += " " * (len(ciphertext) % len(key))
+	ciphertext += ' ' * (len(key) - len(ciphertext) % len(key))
 	row = math.ceil(len(ciphertext) / len(key))
 	for i in key:
 		block.append([])
@@ -79,13 +93,12 @@ elif cipher == 'row':
 		for j in range (row):
 			block[int(i)].append(ciphertext[x])
 			x += 1
-	print(block)
 
 	for i in range(row):
 		for j in key:
 			n = block[int(j) - 1].pop(0) 
 			if n != ' ':
-				print(n,end='')
+				print(n.lower(),end='')
 
 # rail fence cipher
 elif cipher == 'rail_fence':
@@ -98,13 +111,13 @@ elif cipher == 'rail_fence':
 	flag = True
 	for x in range(int(key)):
 		n = 0
-		for i in range(len(ciphertext) + 1):
+		for i in range(len(ciphertext)):
 			if n == x:
 				block[n].append(ciphertext[word])
 				word += 1	
 			
 			if flag == True:
-				if n != fence:
+				if n != (fence - 1):
 					n += 1
 				else:
 					flag = False
@@ -119,7 +132,7 @@ elif cipher == 'rail_fence':
 	n = 0
 	for i in ciphertext:
 		x = block[n].pop(0)
-		print(x,end='')
+		print(x.lower(),end='')
 		if flag == True:
 			if n != fence - 1:
 				n += 1

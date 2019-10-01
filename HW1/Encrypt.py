@@ -63,15 +63,22 @@ elif cipher == 'playfair':
 # vernam cipher
 elif cipher == 'vernam':
 	n = 0
+	k = 0
 	for i in plaintext:
-		ans += chr(((ord(i) - ord('a')) ^ (ord(key[n]) - ord('A'))) + 65)
-		n += 1
+		if n < len(key):
+			ans += chr((ord(i) + ord(key[n]) - 162) % 26 + 65)
+			n += 1
+		else:
+			ans += chr((ord(i) + ord(plaintext[k]) - 194 ) % 26 + 65)
+			k += 1
 	print (ans)
 
 # row cipher
 elif cipher == 'row':
+	plaintext += ' ' * (len(key) - len(plaintext) % len(key))
 	for i in range (len(key)):
 		block.append([])
+
 
 	for n in range (len(key)):
 		for i in range (math.ceil(len(plaintext)/len(key))):
@@ -79,7 +86,8 @@ elif cipher == 'row':
 
 	for i in range (len(block)):
 		for n in block[i]:
-			print (n.upper(), end='')
+			if n !=' ':
+				print (n.upper(), end='')
 
 # rail fence cipher
 elif cipher == 'rail_fence':
