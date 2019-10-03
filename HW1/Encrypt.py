@@ -12,7 +12,7 @@ block = []
 if cipher == 'caesar':
 	for i in plaintext:
 		ans += chr((ord(i) - ord('a') + int(key)) % 26 + 65)
-	print (ans)
+	print (ans,end='')
 
 # playfair cipher
 elif cipher == 'playfair':
@@ -57,7 +57,7 @@ elif cipher == 'playfair':
 			col2 = p2 % 5
 			ans += key[(row1) * 5 + col2]
 			ans += key[(row2) * 5 + col1]
-	print(ans)
+	print(ans,end='')
 
 
 # vernam cipher
@@ -71,7 +71,7 @@ elif cipher == 'vernam':
 		else:
 			ans += chr((ord(i) + ord(plaintext[k]) - 194 ) % 26 + 65)
 			k += 1
-	print (ans)
+	print (ans,end='')
 
 # row cipher
 elif cipher == 'row':

@@ -12,7 +12,7 @@ block = []
 if cipher == 'caesar':
 	for i in ciphertext:
 		ans += chr((ord(i) - ord('A') - int(key)) % 26 + 65)
-	print (ans.lower())
+	print (ans.lower(),end='')
 
 # playfair cipher
 elif cipher == 'playfair':
@@ -24,7 +24,7 @@ elif cipher == 'playfair':
 			key += i
 
 	for i in range(65, 91):
-		if (key.find(chr(i)) == -1) & (i != 74):
+		if (key.find(chr(i)) == -1) and (i != 74):
 			key += chr(i)
 
 	ciphertext.replace('J','I')
@@ -57,7 +57,7 @@ elif cipher == 'playfair':
 			col2 = p2 % 5
 			ans += key[(row1) * 5 + col2]
 			ans += key[(row2) * 5 + col1]
-	print(ans.lower())
+	print(ans.lower(),end='')
 
 # vernam cipher
 elif cipher == 'vernam':
@@ -79,7 +79,7 @@ elif cipher == 'vernam':
 				p += 97
 			k += 1
 		ans += chr(p)
-	print (ans)
+	print (ans,end='')
 
 # row cipher
 elif cipher == 'row':
@@ -90,7 +90,7 @@ elif cipher == 'row':
 	x = 0
 	less = len(ciphertext) % len(key)
 	for i in range(len(key)):
-		if i < less & less != 0:
+		if i < less or less == 0:
 			for j in range (row):
 				block[int(i)].append(ciphertext[x])
 				x += 1
