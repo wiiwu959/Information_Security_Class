@@ -83,16 +83,22 @@ elif cipher == 'vernam':
 
 # row cipher
 elif cipher == 'row':
-	ciphertext += ' ' * (len(key) - len(ciphertext) % len(key))
 	row = math.ceil(len(ciphertext) / len(key))
 	for i in key:
 		block.append([])
 
 	x = 0
+	less = len(ciphertext) % len(key)
 	for i in range(len(key)):
-		for j in range (row):
-			block[int(i)].append(ciphertext[x])
-			x += 1
+		if i < less & less != 0:
+			for j in range (row):
+				block[int(i)].append(ciphertext[x])
+				x += 1
+		else:
+			for j in range (row - 1):
+				block[int(i)].append(ciphertext[x])
+				x += 1
+			block[int(i)].append(' ')
 
 	for i in range(row):
 		for j in key:
