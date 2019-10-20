@@ -5,9 +5,12 @@
 
 #### 開發環境
 Windows10 Python3
+
+- plaintext 使用小寫
+- ciphertext 使用大寫
+- key 使用大寫
 ___
-## HW1
-### input
+## hw1
 - Cipher
 	- caesar
 	- playfair
@@ -16,9 +19,14 @@ ___
 	- rail_fence
 - Input	
 	```
-	./Encrypt.py {Cipher} {Key} {Plaintext}
-	./Decrypt.py {Cipher} {Key} {Ciphertext}
+	python3 ./Encrypt.py {Cipher} {Key} {Plaintext}
+	python3 ./Decrypt.py {Cipher} {Key} {Ciphertext}
 	```
-	- plaintext 使用小寫
-	- ciphertext 使用大寫
-	- key 使用大寫
+
+## hw2
+- DES Encrypt/Decrypt
+- Input
+	```
+	python3 ./EncryptDES.py {Key} {Plaintext}
+	python3 ./DecryptDES.py {Key} {Ciphertext}
+	```

@@ -95,13 +95,14 @@ S = [[14,  4, 13,  1,  2, 15, 11,  8,  3, 10,  6, 12,  5,  9,  0,  7,
 	  2,  1, 14,  7,  4, 10,  8, 13, 15, 12,  9,  0,  3,  5,  6, 11]
 ]
 
-
 def permutation(table, block):
 	result = []
 	for i in table:
 		result.append(block[i - 1])
 	return result
 
+# 6 bits -> 4bits
+# 48 bits -> 32 bits
 def s_box(block, part):
 	row = '' + block[0] + block[5]
 	row = int(row, 2)
@@ -111,8 +112,8 @@ def s_box(block, part):
 	result = S[part][row * 16 + column]
 	return format(int(result), '04b')
 
-
-def f_function(block, K):
+# do permutation、XOR、s-box computing
+def f_function(block):
 	block = permutation(E, block)
 	result = []
 	for i in range (48):
@@ -122,13 +123,14 @@ def f_function(block, K):
 		result.extend(s_box(smallblock, i))
 	return permutation(P, result)
 
+# do f-function、XOR、swapping
 def feistel(left, right, K):
-	new_right = f_function(right, K)
+	new_right = f_function(right)
 	for i in range (32):
 		new_right[i] = str((int(new_right[i]) + int(left[i])) % 2)
 	return right, new_right
 
-
+# shift the bits, called when generating keys
 def key_shift(block, round):
 	popping = block.pop(0)
 	block.insert(27, popping)
@@ -142,14 +144,14 @@ def key_shift(block, round):
 	return block
 
 
-
-
 # convert hex input to 64 bits binary
 plaintext = permutation(IP, format(int(plaintext, 16), '064b'))
 key = format(int(key, 16), '064b')
+
 plaintext_left = plaintext[0:32]
 plaintext_right = plaintext[32:]
 
+# 16 rounds of computing
 pass_key = permutation(PC_1, key)
 for i in range (16):
 	pass_key = key_shift(pass_key, i + 1)
@@ -162,4 +164,4 @@ plaintext = permutation(IP_1, plaintext_left + plaintext_right)
 cipher = ''.join(plaintext)
 cipher = hex(int(cipher, 2))
 
-print (cipher.upper())
+print (cipher[0:2] + cipher[2:].upper())
