@@ -10,6 +10,7 @@ Windows10 Python3
 - ciphertext 使用大寫
 - key 使用大寫
 ___
+
 ## hw1
 - Cipher
 	- caesar
@@ -29,4 +30,11 @@ ___
 	```
 	python3 ./EncryptDES.py {Key} {Plaintext}
 	python3 ./DecryptDES.py {Key} {Ciphertext}
+	```
+
+## hw3
+- AES ECB、CBC、OFB Encrypt/Decrypt
+- Input
+	```
+	python3 ./AES.py {picture file name} {key}
 	```
